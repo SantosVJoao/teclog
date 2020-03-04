@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Threading;
 
@@ -52,10 +53,49 @@ namespace ConsoleApp2
                     Console.WriteLine("Cadastrar Notebooks");
                     CadastarNotebooks();
                     break;
+                case ConsoleKey.D5:
+                    Console.WriteLine("Alterar cadastro de pessoas");
+                    AlterarCadastroDePessoas();
+                    break;
+                case ConsoleKey.D6:
+                    Console.WriteLine("Exclusão do cadastro de Pessoas");
+                    ExclusaoDePessoas();
+                    break;
                 default:
                     Console.WriteLine("Por favor, escolha uma opção válida");
                     break;
             }
+        }
+
+        private static void AlterarCadastroDePessoas()
+        {
+            var codigo = 0;
+            ListarPessoas();
+            Console.WriteLine("Digite o Codigo que deseja alterar");
+            var codigoDigitado = Console.ReadLine();
+            int.TryParse(codigoDigitado, out codigo);
+            var p = pessoas.Where(w => w.Codigo == codigo).FirstOrDefault();
+
+            if (p == null)
+            {
+                Console.WriteLine("Codigo não encontrado");
+            }
+            else
+            {
+                var nome = "";
+                while (string.)
+
+
+
+
+
+            }
+
+        }
+
+        private static void ExclusaoDePessoas()
+        {
+            
         }
 
         private static void CadastarNotebooks()
@@ -140,6 +180,8 @@ namespace ConsoleApp2
             Console.WriteLine("2-Cadastrar de Pessoa");
             Console.WriteLine("3-Listar Notebooks");
             Console.WriteLine("4-Cadastrar Notebooks");
+            Console.WriteLine("5-Alterar Pessoa");
+            Console.WriteLine("6-Excluir Pessoa");
             #endregion
         }
     }

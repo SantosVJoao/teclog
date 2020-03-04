@@ -15,5 +15,10 @@ namespace ConsoleApp2
             Nome = nome;
             Idade = idade;
         }
+        public void AlteraPessoa(string nome, int idade)
+        {
+            
+        }
+
     }
 }
