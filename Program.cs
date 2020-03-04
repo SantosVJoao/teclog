@@ -72,7 +72,6 @@ namespace ConsoleApp2
 
             var n = new Nb(notebooks.Count, Marca, ram, PlacaDeVideo);
             notebooks.Add(n);
-
         }
 
         private static void ListarNotebooks()
