@@ -1,59 +1,147 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text;
+using System.Threading;
 
 namespace ConsoleApp2
 {
     class Program
     {
+        static List<Pessoas> pessoas = new List<Pessoas>();
+        static List<Nb> notebooks = new List<Nb>();
+        private static int ram;
+
         static void Main(string[] args)
         {
             var tecla = ConsoleKey.A;
-            var Pessoas = new List<Pessoas>();
-            var Notebooks = new List<notebooks>();
 
             while (tecla != ConsoleKey.Escape)
             {
-                Console.Clear();
-                Console.WriteLine(DateTime.Now.ToString(), CultureInfo.CurrentCulture);
                 PrintaMenu();
+
                 tecla = Console.ReadKey().Key;
-                
-                PrintaMenu();
 
-                switch (tecla)
-                {
-                    case ConsoleKey.D1:
-                        Console.WriteLine("\nCadastrar pessoas");
-                        break;
-                    case ConsoleKey.D2:
-                        Console.WriteLine("\nCadastrar Notebooks");
-                        break;
-                    case ConsoleKey.D3:
-                        Console.WriteLine("\nListar pessoas");
-                        break;
-                    case ConsoleKey.D4:
-                        Console.WriteLine("\nListar Notebooks");
-                        break;
-
-                    default:
-                        Console.WriteLine("\nSelecione uma opção valida");
-                        break;
-                }
                 Console.WriteLine();
-                Console.WriteLine("O que deseja fazer?\nEsc = Sair do sistema\nEnter = Voltar ao Menu");
+                ValidaOpcoes(tecla);
+
+                Console.WriteLine();
+                Console.WriteLine("O que deseja fazer?\nEsc - Sair\nEnter - Voltar ao Menu");
                 tecla = Console.ReadKey().Key;
             }
+        }
+
+        private static void ValidaOpcoes(ConsoleKey tecla)
+        {
+            Console.Clear();
+            switch (tecla)
+            {
+                case ConsoleKey.D1:
+                    Console.WriteLine("Listar Pessoas");
+                    ListarPessoas();
+                    break;
+                case ConsoleKey.D2:
+                    Console.WriteLine("Cadastrar Pessoas");
+                    CadastrarPessoa();
+                    break;
+                case ConsoleKey.D3:
+                    Console.WriteLine("Listar Notebooks");
+                    ListarNotebooks();
+                    break;
+                case ConsoleKey.D4:
+                    Console.WriteLine("Cadastrar Notebooks");
+                    CadastarNotebooks();
+                    break;
+                default:
+                    Console.WriteLine("Por favor, escolha uma opção válida");
+                    break;
+            }
+        }
+
+        private static void CadastarNotebooks()
+        {
+            Console.WriteLine("Digite a Marca do notebook:");
+            var Marca = Console.ReadLine();
+            Console.WriteLine("Digite a Quantidade de RAM do seu Notebook:");
+            var QuantidadeRam = Console.ReadLine();
+
+            int.TryParse(QuantidadeRam, out ram);
+
+            Console.WriteLine("Digite Placa de video");
+            var PlacaDeVideo = Console.ReadLine();
+
+            var n = new Nb(notebooks.Count, Marca, ram, PlacaDeVideo);
+            notebooks.Add(n);
 
         }
+
+        private static void ListarNotebooks()
+        {
+            if (notebooks.Count == 0)
+            {
+                Console.WriteLine("Não existem notebooks cadastrados.");
+            }
+            else
+            {
+                Console.WriteLine("---------------------------------------------------------------");
+                foreach (var Nb in notebooks)
+                {
+                    Console.WriteLine($"Codigo: {Nb.Codigo}");
+                    Console.WriteLine($"Marca: {Nb.Marca}");
+                    Console.WriteLine($"QuantidadeRam: {Nb.QtdRam}");
+                    Console.WriteLine($"Placa de Video: {Nb.placadevideo}");
+                    Console.WriteLine("---------------------------------------------------------------");
+                }
+            }
+        }
+
+        private static void CadastrarPessoa()
+        {
+            Console.WriteLine("Digite o Nome: ");
+            var nome = Console.ReadLine();
+            Console.WriteLine("Digite o Idade: ");
+            var idade = 0;
+            try
+            {
+                idade = Convert.ToInt32(Console.ReadLine());
+            }
+            catch (Exception)
+            {
+                idade = 18;
+            }
+            var p = new Pessoas(pessoas.Count, nome, idade);
+            pessoas.Add(p);
+        }
+
+        private static void ListarPessoas()
+        {
+            if (pessoas.Count == 0)
+            {
+                Console.WriteLine("Não existem registros de pessoas.");
+            }
+            else
+            {
+                Console.WriteLine("---------------------------------------------------------------");
+                foreach (var pessoa in pessoas)
+                {
+                    Console.WriteLine($"Codigo: {pessoa.Codigo}");
+                    Console.WriteLine($"Nome: {pessoa.Nome}");
+                    Console.WriteLine($"Idade: {pessoa.Idade}");
+                    Console.WriteLine("---------------------------------------------------------------");
+                }
+            }
+        }
+
         static void PrintaMenu()
         {
+            #region Opcoes
             Console.WriteLine("Bem vindo ao nosso sistema!");
             Console.WriteLine("Escolha uma opção:");
-            Console.WriteLine("1-Cadastro de Pessoa");
-            Console.WriteLine("2-Cadastro de Notebook");
+            Console.WriteLine("1-Listar Pessoas:");
+            Console.WriteLine("2-Cadastrar de Pessoa");
             Console.WriteLine("3-Listar Notebooks");
-            Console.WriteLine("4-Listar Pessoas");
+            Console.WriteLine("4-Cadastrar Notebooks");
+            #endregion
         }
     }
 }
